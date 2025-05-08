@@ -5,7 +5,7 @@ import AboutUs from "./pages/AboutUs";
 import Infor from "./pages/Infor";
 import Container from "./pages/Container";
 import NotFound from "./pages/NotFound";
-import Watch from "./pages/watch";
+import Watch from "./pages/Watch";
 import ListMovies from "./pages/ListMovies";
 import ListType from "./pages/ListType";
 import "@coreui/coreui/dist/css/coreui.min.css";
