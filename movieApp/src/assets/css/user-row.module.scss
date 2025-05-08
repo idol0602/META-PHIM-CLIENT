@@ -1,0 +1,21 @@
+.table>:not(caption)>*>* {
+    background-color: rgb(33, 38, 49) !important;
+}
+
+.row-user td {
+    background-color: rgb(33, 38, 49);
+    color: whitesmoke;
+    border-bottom: 0.1px solid rgba(158, 171, 198, 0.355);
+}
+
+.text-secondary {
+    color: whitesmoke;
+}
+
+.row-user:hover .text-secondary {
+    color: #ffffff;
+}
+
+.row-user:not(:last-child) {
+    margin-bottom: 8px;
+}

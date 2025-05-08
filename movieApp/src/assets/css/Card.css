@@ -1,0 +1,10 @@
+.card .btn {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.card .btn:hover {
+    background-color: rgb(235, 200, 113);
+    color: black !important;
+    border: 1px solid rgb(235, 200, 113) !important;
+}

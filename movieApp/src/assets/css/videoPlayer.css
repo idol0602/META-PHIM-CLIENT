@@ -1,0 +1,36 @@
+.video-player-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    /* Tương đương min-h-screen */
+    padding: 1rem;
+    /* Tương đương p-4, giả định rem là đơn vị cơ bản */
+    background-color: #f3f4f6;
+    /* Tương đương bg-gray-100 */
+}
+
+.video-player-wrapper {
+    width: 100%;
+    /* Tương đương w-full */
+    max-width: 768px;
+    /* Tương đương max-w-3xl, giả định giá trị */
+    background-color: #000;
+    /* Tương đương bg-black */
+    border-radius: 0.5rem;
+    /* Tương đương rounded-lg, giả định giá trị */
+    overflow: hidden;
+    /* Tương đương overflow-hidden */
+    position: relative;
+    /* Tương đương relative */
+}
+
+.video-element {
+    width: 100%;
+    /* Tương đương w-full */
+    height: auto;
+    /* Tương đương h-auto */
+    cursor: pointer;
+    /* Tương đương cursor-pointer */
+}

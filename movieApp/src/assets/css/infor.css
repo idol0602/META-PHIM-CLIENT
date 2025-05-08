@@ -1,0 +1,40 @@
+.btn-hoverInfor {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    padding: 10px 16px;
+    border-radius: 999px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    background-color: transparent;
+    color: white;
+}
+
+/* Hover hiệu ứng màu vàng */
+.btn-hoverInfor:hover {
+    color: rgb(235, 200, 113);
+    border-color: rgb(235, 200, 113);
+}
+
+.btn-hoverInfor svg {
+    transition: color 0.3s ease;
+}
+
+/* Đổi màu icon khi hover */
+.btn-hoverInfor:hover svg {
+    color: rgb(235, 200, 113);
+}
+
+/* Icon trái tim đỏ khi like */
+.btn-hoverInfor .heart-active {
+    color: red;
+}
+
+/* Icon check xanh khi đã thêm xem sau */
+.btn-hoverInfor .check-active {
+    color: green;
+}
+
+.btnInfor {
+    border: 2px solid white
+}

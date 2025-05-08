@@ -1,0 +1,320 @@
+/* Main styles */
+.about-us-page {
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #111827, #1f2937);
+    color: white;
+}
+
+/* Back button */
+.back-button {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: none;
+    transition: background-color 0.3s;
+}
+
+.back-button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Hero section */
+.hero-section {
+    overflow: hidden;
+}
+
+.bg-left {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(88, 28, 135, 0.2), transparent);
+}
+
+.bg-right {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to left, rgba(19, 78, 74, 0.2), transparent);
+}
+
+.z-index-1 {
+    z-index: 1;
+}
+
+/* Team cards */
+.team-card {
+    background: linear-gradient(to bottom right, #1f2937, #111827);
+    border: none;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.team-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+.card-title {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+}
+
+.developer-title {
+    background: linear-gradient(to right, #c084fc, #ec4899);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.designer-title {
+    background: linear-gradient(to right, #2dd4bf, #10b981);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.card-subtitle {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+/* Image styling */
+.image-wrapper {
+    position: relative;
+}
+
+.image-glow {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    filter: blur(15px);
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+
+.team-card:hover .image-glow {
+    opacity: 1;
+}
+
+.developer-glow {
+    background: linear-gradient(to right, #a855f7, #ec4899);
+}
+
+.designer-glow {
+    background: linear-gradient(to right, #14b8a6, #10b981);
+}
+
+.image-container {
+    position: relative;
+    width: 128px;
+    height: 128px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid rgba(255, 255, 255, 0.1);
+}
+
+.profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Content section */
+.content-section {
+    background-color: rgba(17, 24, 39, 0.5);
+    backdrop-filter: blur(8px);
+}
+
+.about-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    background: linear-gradient(to right, #a855f7, #14b8a6);
+    color: white;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+
+.content-text {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: #d1d5db;
+}
+
+.custom-link {
+    color: #2dd4bf;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    text-decoration-thickness: 2px;
+    transition: color 0.3s;
+}
+
+.custom-link:hover {
+    color: #5eead4;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767.98px) {
+    .card-title {
+        font-size: 1.75rem;
+    }
+
+    .image-container {
+        width: 100px;
+        height: 100px;
+        margin-top: 1rem;
+    }
+}
+
+
+.contact-section {
+    background-color: #121827;
+    color: white;
+    border-radius: 12px;
+    margin-top: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(138, 75, 255, 0.5), transparent);
+}
+
+.contact-wrapper {
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.contact-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(90deg, #8a4bff, #5e72e4);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+}
+
+.social-links-container {
+    display: flex;
+    justify-content: center;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+}
+
+.social-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #a0aec0;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.social-link:hover {
+    color: white;
+    transform: translateY(-5px);
+}
+
+.icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-bottom: 0.75rem;
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s ease;
+}
+
+.icon-wrapper::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: rgba(30, 41, 59, 0.8);
+    z-index: -1;
+    transition: all 0.3s ease;
+}
+
+.social-link:hover .icon-wrapper::before {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(138, 75, 255, 0.4);
+}
+
+.instagram-link .icon-wrapper {
+    color: #e1306c;
+}
+
+.facebook-link .icon-wrapper {
+    color: #4267b2;
+}
+
+.github-link .icon-wrapper {
+    color: #f5f5f5;
+}
+
+.social-link span {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-top: 0.25rem;
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+.social-link:hover span {
+    opacity: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .social-links-container {
+        gap: 1.5rem;
+    }
+
+    .icon-wrapper {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+/* Subtle animation for the icons */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.social-link:hover .icon-wrapper {
+    animation: pulse 1.5s infinite;
+}

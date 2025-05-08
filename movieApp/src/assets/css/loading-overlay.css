@@ -1,0 +1,262 @@
+/* Loading Overlay Base Styles */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    background-color: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    transition: all 0.5s ease;
+}
+
+.loading-overlay.visible {
+    opacity: 1;
+}
+
+.loading-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Adjust the loading animation container size to be more compact */
+.loading-animation-container {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    margin: 0 auto;
+}
+
+/* Adjust the sizes of the circles to be more compact */
+.rotating-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 8px solid rgb(235, 200, 113);
+    border-top-color: transparent;
+    transform: translate(-50%, -50%);
+    animation: spin-slow 8s linear infinite;
+}
+
+.pulsating-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    border: 4px solid rgb(235, 200, 113);
+    opacity: 0.7;
+    transform: translate(-50%, -50%);
+    animation: pulse-scale 3s ease-in-out infinite;
+}
+
+.inner-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 4px solid rgb(235, 200, 113);
+    transform: translate(-50%, -50%);
+    animation: spin-reverse 5s linear infinite;
+}
+
+/* Center dot */
+.center-dot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 48px;
+    height: 48px;
+    background-color: rgb(235, 200, 113);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    animation: pulse 2s ease-in-out infinite;
+    box-shadow: 0 0 20px 10px rgba(235, 200, 113, 0.5);
+}
+
+/* Particles */
+.particles-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.particle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 12px;
+    height: 12px;
+    margin-top: -6px;
+    margin-left: -6px;
+    background-color: rgb(235, 200, 113);
+    border-radius: 50%;
+    animation: particle-pulse 2s infinite;
+}
+
+/* Orbits */
+.orbit {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Adjust orbits to be more compact */
+.orbit-large {
+    width: 160px;
+    /* Reduced from 180px */
+    height: 160px;
+    animation: spin-slow 8s linear infinite;
+}
+
+.orbit-small {
+    width: 100px;
+    /* Reduced from 120px */
+    height: 100px;
+    animation: spin-reverse 5s linear infinite;
+}
+
+.orbit-dot {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background-color: rgb(235, 200, 113);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(235, 200, 113, 0.8);
+}
+
+.orbit-large .orbit-dot {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.orbit-small .orbit-dot {
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Bring the title closer to the animation */
+.meta-title {
+    margin-top: 160px;
+    /* Reduced from 220px */
+    color: rgb(235, 200, 113);
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: 8px;
+    text-shadow: 0 0 10px rgba(235, 200, 113, 0.7);
+    animation: text-glow 2s ease-in-out infinite;
+}
+
+/* Bring the progress bar closer to the title */
+.progress-container {
+    margin: 15px auto;
+    /* Reduced from 20px */
+    width: 200px;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: rgb(235, 200, 113);
+    animation: progress-bar 2.5s ease-in-out infinite;
+}
+
+/* Keyframes */
+@keyframes spin-slow {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+@keyframes spin-reverse {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) rotate(-360deg);
+    }
+}
+
+@keyframes pulse-scale {
+
+    0%,
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.3;
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 0.7;
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 0.8;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+}
+
+@keyframes particle-pulse {
+
+    0%,
+    100% {
+        transform: rotate(inherit) translateX(80px) scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: rotate(inherit) translateX(100px) scale(1.5);
+        opacity: 0.5;
+    }
+}
+
+@keyframes progress-bar {
+    0% {
+        width: 0%;
+    }
+
+    100% {
+        width: 100%;
+    }
+}
+
+@keyframes text-glow {
+
+    0%,
+    100% {
+        text-shadow: 0 0 10px rgba(235, 200, 113, 0.7);
+    }
+
+    50% {
+        text-shadow: 0 0 20px rgba(235, 200, 113, 1);
+    }
+}

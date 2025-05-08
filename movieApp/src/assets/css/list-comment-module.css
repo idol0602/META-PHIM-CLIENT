@@ -1,0 +1,330 @@
+/* Namespaced CSS for the comment system to avoid conflicts */
+/* Using lcm- prefix (List Comment Module) for all classes */
+
+/* Base styles for the comment system */
+.lcm-comment-system {
+    font-family: inherit;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Main container */
+.lcm-comment-container {
+    background-color: #1e1e2e;
+    border: 1px solid #2d2d3f;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    margin-bottom: 2rem;
+}
+
+/* Header */
+.lcm-comment-header {
+    background-color: #252538;
+    border-bottom: 1px solid rgb(235, 200, 113);
+    padding: 1rem 1.5rem;
+}
+
+.lcm-header-title {
+    color: rgb(235, 200, 113);
+    font-weight: 600;
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+/* Body */
+.lcm-comment-body {
+    padding: 1.5rem;
+}
+
+/* Error message */
+.lcm-comment-error {
+    background-color: rgba(220, 38, 38, 0.1);
+    border: 1px solid #dc2626;
+    color: #ef4444;
+    padding: 0.75rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+}
+
+/* Comment form */
+.lcm-comment-form {
+    background-color: rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(235, 200, 113, 0.1);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.lcm-comment-user-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.lcm-comment-avatar-container {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid rgb(235, 200, 113);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    flex-shrink: 0;
+}
+
+.lcm-comment-avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.lcm-comment-username {
+    color: rgb(235, 200, 113);
+    font-weight: 600;
+}
+
+.lcm-comment-input-container {
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+.lcm-comment-input {
+    width: 100%;
+    background-color: #2a2a3a;
+    border: 1px solid rgba(235, 200, 113, 0.3);
+    color: #e2e2e2;
+    border-radius: 8px;
+    resize: none;
+    padding: 12px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+
+.lcm-comment-input:focus {
+    border-color: rgb(235, 200, 113);
+    box-shadow: 0 0 0 2px rgba(235, 200, 113, 0.2), inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    outline: none;
+}
+
+.lcm-comment-input::placeholder {
+    color: #a0a0b8;
+    opacity: 0.7;
+}
+
+.lcm-comment-button-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.lcm-comment-post-button {
+    background-color: rgb(235, 200, 113);
+    color: #1e1e2e;
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1.25rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.lcm-comment-post-button:hover {
+    background-color: rgb(245, 215, 140);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.lcm-comment-post-button:active {
+    transform: translateY(1px);
+    background-color: rgb(205, 170, 83);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Comment list */
+.lcm-comment-list {
+    max-height: 600px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+/* Individual comment */
+.lcm-comment-item {
+    background-color: #1e1e2e;
+    border: 1px solid #2d2d3f;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    transition: all 0.2s ease;
+}
+
+.lcm-comment-item:hover {
+    background-color: #252538;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-left: 3px solid rgb(235, 200, 113);
+}
+
+.lcm-comment-item-content {
+    padding: 1rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.lcm-comment-details {
+    flex: 1;
+}
+
+.lcm-comment-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.lcm-comment-timestamp {
+    color: #a0a0b8;
+    font-size: 0.8rem;
+}
+
+.lcm-comment-text {
+    color: #e2e2e2;
+    margin: 0.75rem 0;
+    line-height: 1.5;
+}
+
+/* Comment actions */
+.lcm-comment-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.lcm-comment-edit-button,
+.lcm-comment-delete-button {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.lcm-comment-edit-button {
+    color: #a0a0b8;
+}
+
+.lcm-comment-edit-button:hover {
+    color: rgb(235, 200, 113);
+}
+
+.lcm-comment-delete-button {
+    color: #a0a0b8;
+}
+
+.lcm-comment-delete-button:hover {
+    color: #ef4444;
+}
+
+/* Edit form */
+.lcm-comment-edit-form {
+    margin-top: 0.75rem;
+}
+
+.lcm-comment-edit-buttons {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.lcm-comment-save-button {
+    background-color: rgb(235, 200, 113);
+    color: #1e1e2e;
+    border: none;
+    border-radius: 6px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.lcm-comment-save-button:hover {
+    background-color: rgb(245, 215, 140);
+}
+
+.lcm-comment-cancel-button {
+    background-color: transparent;
+    color: #e2e2e2;
+    border: 1px solid #2d2d3f;
+    border-radius: 6px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.lcm-comment-cancel-button:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Empty state */
+.lcm-comment-empty {
+    text-align: center;
+    color: #a0a0b8;
+    font-style: italic;
+    padding: 2rem 0;
+}
+
+/* Scrollbar styling */
+.lcm-comment-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.lcm-comment-list::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.lcm-comment-list::-webkit-scrollbar-thumb {
+    background: rgba(235, 200, 113, 0.5);
+    border-radius: 10px;
+}
+
+.lcm-comment-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(235, 200, 113, 0.7);
+}
+
+/* Add box-sizing to all elements to prevent conflicts */
+.lcm-comment-system *,
+.lcm-comment-system *::before,
+.lcm-comment-system *::after {
+    box-sizing: border-box;
+}
+
+/* Reset some basic elements to prevent conflicts */
+.lcm-comment-system h5,
+.lcm-comment-system h6,
+.lcm-comment-system p,
+.lcm-comment-system button,
+.lcm-comment-system textarea {
+    margin: 0;
+    font-family: inherit;
+}
+
+/* Animation for new comments - with namespaced keyframes */
+@keyframes lcmFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.lcm-comment-item {
+    animation: lcmFadeIn 0.3s ease-out forwards;
+}

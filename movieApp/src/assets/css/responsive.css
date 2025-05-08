@@ -1,0 +1,83 @@
+@media (max-width: 768px) {
+    .navbar-menu {
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background: rgb(33, 38, 49);
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+        padding: 0;
+    }
+
+    .navbar-menu.show {
+        max-height: 400px;
+        opacity: 1;
+        padding: 10px;
+    }
+
+    .menu-btn {
+        display: block;
+    }
+
+    .video-container {
+        height: 40vh !important;
+    }
+
+    .type-item {
+        width: 130px !important;
+        height: 90px !important;
+    }
+
+    .skeleton-image {
+        height: 320px !important;
+    }
+
+    .card:hover .moreInfor {
+        transform: none;
+        opacity: 0;
+        pointer-events: none;
+    }
+}
+
+@media (max-width: 500px) {
+    .type-item {
+        width: 110px !important;
+        height: 60px !important;
+    }
+
+    .type-text {
+        font-size: 15px !important;
+    }
+
+    .card {
+        height: 350px !important;
+    }
+
+    .card-title,
+    .card-text {
+        font-size: 12px;
+    }
+
+    .skeleton-image {
+        height: 220px !important;
+    }
+
+    .skeleton-title {
+        height: 25px !important;
+    }
+
+    .skeleton-subtitle {
+        height: 18px !important;
+    }
+
+    .poster {
+        height: 30vh;
+    }
+
+    .control {
+        margin-top: 100% !important;
+    }
+}
