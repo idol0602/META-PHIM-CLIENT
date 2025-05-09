@@ -38,6 +38,7 @@ const VideoPlayerMain = React.forwardRef(function VideoPlayerMain(
   // CSS Styles
   const styles = {
     container: {
+      position: "relative",
       width: "100%",
       height: "100%",
       backgroundColor: "black",
@@ -56,17 +57,19 @@ const VideoPlayerMain = React.forwardRef(function VideoPlayerMain(
       left: "0",
       right: "0",
       background: "linear-gradient(to top, rgba(0,0,0,0.8), transparent)",
-      padding: "1rem",
+      padding: "2%", // Relative padding
       opacity: "0",
       transition: "opacity 0.3s ease",
+      zIndex: "10",
     },
     controlsVisible: {
       opacity: "1",
     },
     progressContainer: {
       position: "relative",
-      height: "0.5rem",
-      marginBottom: "0.75rem",
+      height: "4%", // Relative height
+      minHeight: "4px",
+      marginBottom: "2%", // Relative margin
       backgroundColor: "rgba(255,255,255,0.3)",
       borderRadius: "9999px",
       cursor: "pointer",
@@ -83,8 +86,8 @@ const VideoPlayerMain = React.forwardRef(function VideoPlayerMain(
       position: "absolute",
       top: "50%",
       transform: "translate(-50%, -50%)",
-      width: "0.75rem",
-      height: "0.75rem",
+      width: "8px",
+      height: "8px",
       background: "linear-gradient(to right, #fcd34d, #f59e0b)",
       borderRadius: "9999px",
       opacity: "0",
@@ -97,33 +100,39 @@ const VideoPlayerMain = React.forwardRef(function VideoPlayerMain(
       display: "flex",
       alignItems: "center",
       justifyContent: "space-between",
+      width: "100%",
     },
     controlsGroup: {
       display: "flex",
       alignItems: "center",
-      gap: "0.5rem",
+      gap: "2%", // Relative gap
     },
     button: {
-      padding: "0.5rem",
+      padding: "1%", // Relative padding
+      minWidth: "24px",
+      minHeight: "24px",
       borderRadius: "9999px",
       color: "white",
       backgroundColor: "transparent",
       border: "none",
       cursor: "pointer",
       transition: "background-color 0.2s ease",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
     },
     buttonHover: {
       backgroundColor: "rgba(255,255,255,0.1)",
     },
     volumeSliderContainer: {
       position: "relative",
-      width: "6rem",
-      height: "0.25rem",
+      width: "10%", // Relative width
+      minWidth: "60px",
+      height: "4px",
       backgroundColor: "rgba(255,255,255,0.3)",
       borderRadius: "9999px",
       cursor: "pointer",
     },
-
     volumeSliderProgress: {
       position: "absolute",
       top: 0,
@@ -134,7 +143,6 @@ const VideoPlayerMain = React.forwardRef(function VideoPlayerMain(
       pointerEvents: "none",
       zIndex: 1,
     },
-
     volumeSliderInput: {
       position: "absolute",
       top: 0,
@@ -148,22 +156,27 @@ const VideoPlayerMain = React.forwardRef(function VideoPlayerMain(
       margin: 0,
       padding: 0,
     },
-
     timeDisplay: {
       color: "white",
-      fontSize: "0.875rem",
+      fontSize: "min(2.5vw, 0.875rem)",
+      whiteSpace: "nowrap",
+      marginLeft: "2%", // Relative margin
     },
     playOverlay: {
       position: "absolute",
-      inset: "0",
+      top: "0",
+      left: "0",
+      width: "100%",
+      height: "100%",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
       cursor: "pointer",
+      zIndex: "5",
     },
     playButton: {
-      width: "5rem",
-      height: "5rem",
+      width: "min(15%, 5rem)", // Responsive width
+      height: "min(15%, 5rem)", // Responsive height
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
@@ -177,11 +190,11 @@ const VideoPlayerMain = React.forwardRef(function VideoPlayerMain(
       transform: "scale(1.05)",
     },
     playIcon: {
-      width: "2.5rem",
-      height: "2.5rem",
+      width: "50%", // Relative to button size
+      height: "50%", // Relative to button size
       fill: "white",
       color: "white",
-      marginLeft: "0.25rem",
+      marginLeft: "5%", // Relative to button size
     },
   };
 
@@ -303,6 +316,24 @@ const VideoPlayerMain = React.forwardRef(function VideoPlayerMain(
       /* Hide native video controls */
       video::-webkit-media-controls {
         display: none !important;
+      }
+      
+      /* Responsive controls */
+      @media (max-width: 480px) {
+        .video-controls .controls-row {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 8px;
+        }
+        
+        .video-controls .controls-group {
+          width: 100%;
+          justify-content: space-between;
+        }
+        
+        .video-controls .time-display {
+          margin-left: auto;
+        }
       }
     `;
     document.head.appendChild(style);
@@ -443,6 +474,7 @@ const VideoPlayerMain = React.forwardRef(function VideoPlayerMain(
 
       {/* Custom Controls */}
       <div
+        className="video-controls"
         style={{
           ...styles.controlsContainer,
           ...(controlsVisible ? styles.controlsVisible : {}),
@@ -461,8 +493,8 @@ const VideoPlayerMain = React.forwardRef(function VideoPlayerMain(
         </div>
 
         {/* Controls */}
-        <div style={styles.controlsRow}>
-          <div style={styles.controlsGroup}>
+        <div style={styles.controlsRow} className="controls-row">
+          <div style={styles.controlsGroup} className="controls-group">
             {/* Play/Pause Button */}
             <button
               onClick={togglePlay}
@@ -476,9 +508,23 @@ const VideoPlayerMain = React.forwardRef(function VideoPlayerMain(
               }
             >
               {isPlaying ? (
-                <Pause style={{ width: "1.25rem", height: "1.25rem" }} />
+                <Pause
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    maxWidth: "20px",
+                    maxHeight: "20px",
+                  }}
+                />
               ) : (
-                <Play style={{ width: "1.25rem", height: "1.25rem" }} />
+                <Play
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    maxWidth: "20px",
+                    maxHeight: "20px",
+                  }}
+                />
               )}
             </button>
 
@@ -494,7 +540,14 @@ const VideoPlayerMain = React.forwardRef(function VideoPlayerMain(
                 (e.currentTarget.style.backgroundColor = "transparent")
               }
             >
-              <Rewind style={{ width: "1.25rem", height: "1.25rem" }} />
+              <Rewind
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  maxWidth: "20px",
+                  maxHeight: "20px",
+                }}
+              />
             </button>
 
             {/* Skip Forward */}
@@ -509,7 +562,14 @@ const VideoPlayerMain = React.forwardRef(function VideoPlayerMain(
                 (e.currentTarget.style.backgroundColor = "transparent")
               }
             >
-              <FastForward style={{ width: "1.25rem", height: "1.25rem" }} />
+              <FastForward
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  maxWidth: "20px",
+                  maxHeight: "20px",
+                }}
+              />
             </button>
 
             {/* Volume Control */}
@@ -526,20 +586,25 @@ const VideoPlayerMain = React.forwardRef(function VideoPlayerMain(
                 }
               >
                 {isMuted ? (
-                  <VolumeX style={{ width: "1.25rem", height: "1.25rem" }} />
+                  <VolumeX
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      maxWidth: "20px",
+                      maxHeight: "20px",
+                    }}
+                  />
                 ) : (
-                  <Volume2 style={{ width: "1.25rem", height: "1.25rem" }} />
+                  <Volume2
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      maxWidth: "20px",
+                      maxHeight: "20px",
+                    }}
+                  />
                 )}
               </button>
-              {/* <input
-                type="range"
-                min="0"
-                max="1"
-                step="0.01"
-                value={isMuted ? 0 : volume}
-                onChange={handleVolumeChange}
-                style={styles.volumeSlider}
-              /> */}
               <div style={styles.volumeSliderContainer}>
                 <div
                   style={{
@@ -561,7 +626,7 @@ const VideoPlayerMain = React.forwardRef(function VideoPlayerMain(
             </div>
 
             {/* Time Display */}
-            <div style={styles.timeDisplay}>
+            <div style={styles.timeDisplay} className="time-display">
               {formatTime(currentTime)} / {formatTime(duration)}
             </div>
           </div>
@@ -577,7 +642,14 @@ const VideoPlayerMain = React.forwardRef(function VideoPlayerMain(
               (e.currentTarget.style.backgroundColor = "transparent")
             }
           >
-            <Maximize style={{ width: "1.25rem", height: "1.25rem" }} />
+            <Maximize
+              style={{
+                width: "100%",
+                height: "100%",
+                maxWidth: "20px",
+                maxHeight: "20px",
+              }}
+            />
           </button>
         </div>
       </div>

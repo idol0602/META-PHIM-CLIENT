@@ -305,6 +305,14 @@ body {
     background: linear-gradient(135deg, #17a2b8 0%, #138496 100%) !important;
 }
 
+@media (max-width: 600px) {
+    .Toastify__toast {
+        font-size: 14px;
+        padding: 12px;
+        max-width: 90vw;
+        width: 95%;
+    }
+}
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {

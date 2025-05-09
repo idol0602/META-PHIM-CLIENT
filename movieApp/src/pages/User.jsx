@@ -468,7 +468,7 @@ export default function UserProfile() {
                       fontWeight: "bold",
                     }}
                     onClick={handleUpdateProfile}
-                    className="mb-3 mp-btn"
+                    className="mb-3 mp-btn btn-warning-user"
                   >
                     Cập nhật
                   </Button>
@@ -715,7 +715,7 @@ export default function UserProfile() {
               fontWeight: "bold",
             }}
             onClick={handlePasswordChange}
-            className="mp-btn"
+            className="mp-btn btn-warnig-user"
           >
             Đổi mật khẩu
           </Button>
