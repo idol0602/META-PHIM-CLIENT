@@ -1,12 +1,6 @@
 "use client";
 
-import React, {
-  useRef,
-  useState,
-  useEffect,
-  useContext,
-  useCallback,
-} from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import Hls from "hls.js";
 import { useLocation } from "react-router-dom";
 import axiosInstance from "../global/axiosInstance";
@@ -31,7 +25,7 @@ const VideoPlayerMain = React.forwardRef(function VideoPlayerMain(
   const volumeBarRef = useRef(null);
   const containerRef = useRef(null);
   const progressRef = useRef(null);
-  const activityTimerRef = useRef(null); // Ref for the inactivity timer
+  const controlsHideTimeout = useRef(null); // Ref for the timeout
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -42,7 +36,7 @@ const VideoPlayerMain = React.forwardRef(function VideoPlayerMain(
   const [playButtonHover, setPlayButtonHover] = useState(false);
   const hlsUrl = linkVideo;
 
-  // CSS Styles
+  // CSS Styles (No changes needed here for functionality, but good to keep for reference)
   const styles = {
     container: {
       position: "relative",
@@ -52,7 +46,6 @@ const VideoPlayerMain = React.forwardRef(function VideoPlayerMain(
       borderRadius: "0.5rem",
       overflow: "hidden",
       aspectRatio: "16/9",
-      cursor: controlsVisible ? "default" : "none", // Hide cursor when controls are hidden
     },
     video: {
       width: "100%",
@@ -69,7 +62,6 @@ const VideoPlayerMain = React.forwardRef(function VideoPlayerMain(
       opacity: "0",
       transition: "opacity 0.3s ease",
       zIndex: "10",
-      pointerEvents: controlsVisible ? "auto" : "none", // Disable pointer events when hidden
     },
     controlsVisible: {
       opacity: "1",
@@ -216,18 +208,7 @@ const VideoPlayerMain = React.forwardRef(function VideoPlayerMain(
       .padStart(2, "0")}`;
   };
 
-  // Function to reset the inactivity timer
-  const resetActivityTimer = useCallback(() => {
-    clearTimeout(activityTimerRef.current);
-    setControlsVisible(true);
-    if (isPlaying) {
-      // Only hide controls if video is playing
-      activityTimerRef.current = setTimeout(() => {
-        setControlsVisible(false);
-      }, 2000); // 2 seconds
-    }
-  }, [isPlaying]);
-
+  // Effect for HLS video loading and event listeners
   useEffect(() => {
     const video = videoRef.current;
 
@@ -248,6 +229,7 @@ const VideoPlayerMain = React.forwardRef(function VideoPlayerMain(
           const progress = (video.currentTime / video.duration) * 100;
           progressRef.current.style.width = `${progress}%`;
         }
+        resetControlsHideTimeout(); // Reset timeout on activity
       };
 
       const handleLoadedMetadata = () => {
@@ -257,21 +239,22 @@ const VideoPlayerMain = React.forwardRef(function VideoPlayerMain(
       const handlePause = () => {
         setIsPlaying(false);
         setControlsVisible(true); // Show controls when paused
-        clearTimeout(activityTimerRef.current); // Clear timer when paused
+        clearTimeout(controlsHideTimeout.current); // Clear auto-hide timeout
       };
 
       const handlePlay = () => {
         setIsPlaying(true);
-        if (curTime) {
+        if (curTime && video.currentTime === 0) {
+          // Only set curTime if video hasn't started yet
           video.currentTime = curTime;
         }
-        resetActivityTimer(); // Start timer when playing
+        resetControlsHideTimeout(); // Start auto-hide timeout when playing
       };
 
       const handleEnded = () => {
         setIsPlaying(false);
-        setControlsVisible(true); // Show controls when ended
-        clearTimeout(activityTimerRef.current); // Clear timer when ended
+        setControlsVisible(true); // Show controls when video ends
+        clearTimeout(controlsHideTimeout.current); // Clear auto-hide timeout
       };
 
       video.addEventListener("timeupdate", handleTimeUpdate);
@@ -280,24 +263,17 @@ const VideoPlayerMain = React.forwardRef(function VideoPlayerMain(
       video.addEventListener("play", handlePlay);
       video.addEventListener("ended", handleEnded);
 
-      // Initial call to set controls visibility based on initial playing state
-      if (isPlaying) {
-        resetActivityTimer();
-      } else {
-        setControlsVisible(true);
-      }
-
       return () => {
         video.removeEventListener("timeupdate", handleTimeUpdate);
         video.removeEventListener("loadedmetadata", handleLoadedMetadata);
         video.removeEventListener("pause", handlePause);
         video.removeEventListener("play", handlePlay);
         video.removeEventListener("ended", handleEnded);
-        clearTimeout(activityTimerRef.current); // Clear timer on unmount
       };
     }
-  }, [hlsUrl, curTime, isPlaying, resetActivityTimer]);
+  }, [hlsUrl, curTime]); // Add curTime to dependencies to re-run if it changes
 
+  // Effect for injecting custom CSS styles
   useEffect(() => {
     const style = document.createElement("style");
     style.textContent = `
@@ -376,18 +352,25 @@ const VideoPlayerMain = React.forwardRef(function VideoPlayerMain(
     };
   }, []);
 
+  // Effect for saving watch continue data
   useEffect(() => {
-    const video = videoRef.current;
+    // This effect runs on component unmount
     return () => {
+      const video = videoRef.current;
       const timeContinue = video?.currentTime || 0;
       const timeTotal = video?.duration || 0;
       const percentRemain =
         timeTotal > 0 ? (timeContinue / timeTotal) * 100 : 0;
+
+      // Extract nameEp safely
+      const epMatch = location.search.match(/ep=([^&]*)/);
+      const nameEp = epMatch ? epMatch[1] : null;
+
       const objWatchContinue = {
         slug: movie.slug,
         image: movie.thumb_url || movie.poster_url,
         name: movie.name,
-        nameEp: location.search.match(/ep=([^&]*)/)[1],
+        nameEp: nameEp, // Use the extracted nameEp
         linkEp: linkEp,
         timeContinue: Math.floor(timeContinue),
         timeTotal: Math.floor(timeTotal),
@@ -400,7 +383,9 @@ const VideoPlayerMain = React.forwardRef(function VideoPlayerMain(
         year: movie.year,
         time: movie.time,
       };
-      if (timeContinue != 0) {
+
+      if (timeContinue !== 0 && nameEp) {
+        // Only save if timeContinue is not 0 and nameEp exists
         axiosInstance
           .post("/addWatchContinue", objWatchContinue, {
             withCredentials: true,
@@ -413,7 +398,34 @@ const VideoPlayerMain = React.forwardRef(function VideoPlayerMain(
           });
       }
     };
-  }, [location.search, movie, linkEp]);
+  }, [location.search, movie, linkEp]); // Add movie and linkEp to dependencies
+
+  // Function to reset the controls auto-hide timeout
+  const resetControlsHideTimeout = () => {
+    clearTimeout(controlsHideTimeout.current);
+    if (isPlaying) {
+      // Only hide if playing
+      controlsHideTimeout.current = setTimeout(() => {
+        setControlsVisible(false);
+      }, 3000); // Hide controls after 3 seconds of inactivity
+    }
+  };
+
+  // Handle mouse movement to show/hide controls
+  const handleMouseMove = () => {
+    setControlsVisible(true);
+    resetControlsHideTimeout();
+  };
+
+  // Clear timeout on mouse leave
+  const handleMouseLeave = () => {
+    if (isPlaying) {
+      // Only hide if playing
+      controlsHideTimeout.current = setTimeout(() => {
+        setControlsVisible(false);
+      }, 3000);
+    }
+  };
 
   const togglePlay = () => {
     const video = videoRef.current;
@@ -422,7 +434,6 @@ const VideoPlayerMain = React.forwardRef(function VideoPlayerMain(
     } else {
       video.pause();
     }
-    resetActivityTimer(); // Reset timer on play/pause
   };
 
   const handleVolumeChange = (e) => {
@@ -430,7 +441,6 @@ const VideoPlayerMain = React.forwardRef(function VideoPlayerMain(
     setVolume(newVolume);
     videoRef.current.volume = newVolume;
     setIsMuted(newVolume === 0);
-    resetActivityTimer(); // Reset timer on volume change
   };
 
   const toggleMute = () => {
@@ -446,7 +456,6 @@ const VideoPlayerMain = React.forwardRef(function VideoPlayerMain(
       }
       setIsMuted(false);
     }
-    resetActivityTimer(); // Reset timer on mute/unmute
   };
 
   const handleProgressClick = (e) => {
@@ -454,7 +463,7 @@ const VideoPlayerMain = React.forwardRef(function VideoPlayerMain(
     const rect = progressBar.getBoundingClientRect();
     const pos = (e.clientX - rect.left) / rect.width;
     videoRef.current.currentTime = pos * duration;
-    resetActivityTimer(); // Reset timer on progress click
+    resetControlsHideTimeout(); // Reset timeout on progress click
   };
 
   const toggleFullscreen = () => {
@@ -479,7 +488,6 @@ const VideoPlayerMain = React.forwardRef(function VideoPlayerMain(
       }
       setIsFullscreen(false);
     }
-    resetActivityTimer(); // Reset timer on fullscreen toggle
   };
 
   const skipBackward = () => {
@@ -487,7 +495,7 @@ const VideoPlayerMain = React.forwardRef(function VideoPlayerMain(
       videoRef.current.currentTime - 10,
       0
     );
-    resetActivityTimer(); // Reset timer on skip
+    resetControlsHideTimeout(); // Reset timeout on skip
   };
 
   const skipForward = () => {
@@ -495,27 +503,16 @@ const VideoPlayerMain = React.forwardRef(function VideoPlayerMain(
       videoRef.current.currentTime + 10,
       duration
     );
-    resetActivityTimer(); // Reset timer on skip
+    resetControlsHideTimeout(); // Reset timeout on skip
   };
 
   return (
     <div
       ref={containerRef}
       style={styles.container}
-      onMouseMove={resetActivityTimer} // Reset timer on mouse move
-      onClick={resetActivityTimer} // Reset timer on click
-      onMouseEnter={() => {
-        setControlsVisible(true); // Always show controls on mouse enter
-        resetActivityTimer();
-      }}
-      onMouseLeave={() => {
-        if (isPlaying) {
-          // Only hide controls on mouse leave if playing
-          activityTimerRef.current = setTimeout(() => {
-            setControlsVisible(false);
-          }, 2000); // Give a small delay before hiding
-        }
-      }}
+      onMouseEnter={handleMouseMove}
+      onMouseMove={handleMouseMove} // Detect mouse movement within the container
+      onMouseLeave={handleMouseLeave}
     >
       <video
         ref={videoRef}
